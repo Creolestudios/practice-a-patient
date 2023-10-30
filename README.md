@@ -37,7 +37,7 @@ $ npm run start:dev
 ```
 
 
-## Get Images from Google Drive according to cases selected
+##  🚀 Get Images from Google Drive according to cases selected
 ```
 export const getImageFromDrive = async (cases: string) => {
   try {
@@ -91,8 +91,105 @@ export const getImageFromDrive = async (cases: string) => {
 
 ```
 
+##  🚀 Convert Audio to Text Using OpenAI Whisper Model
 
+speech to text connversion using openai's whisper model :- https://api.openai.com/v1/audio/translations
 
+```
+async transcribeAudio(file: any) {
+    /// creating formadata for the the model to parse
+    const formData = new FormData();
+    formData.append('model', model);
+    formData.append(
+      'file',
+      new Blob([file?.buffer], { type: 'audio/wav' }),
+      'x.mp3',
+    );
+
+    /// converting the audio to text with the help of whisper-1 model
+    try {
+      let response = await axios.post(
+        'https://api.openai.com/v1/audio/translations',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.OPEN_AI_KEY}`,
+          },
+        },
+      );
+
+      return { text: `${response.data.text}` };
+    } catch (err) {
+      return { error: err?.response?.data?.error?.message };
+    }
+  }
+```
+
+##  🚀 Generate Response from OpenAI using gpt-3.5-turbo 
+
+```
+async generateResponse(body: any): Promise<any> {
+    let { tokens, memory, text, maxTokens, history } = body;
+
+    if (text && text.length != 0) {
+      try {
+        // update the memory with the audio file text
+        const updateMemory1 = await this.updateMemory(
+          'user',
+          text,
+          memory,
+          tokens,
+          maxTokens,
+        );
+
+        memory = updateMemory1.memory;
+        maxTokens = updateMemory1.maxTokens;
+        tokens = updateMemory1.tokens;
+
+        /// configuring the openai API
+        const configuration = new Configuration({
+          apiKey: process.env.OPEN_AI_KEY,
+        });
+        const openai = new OpenAIApi(configuration);
+
+        /// calling the API
+        const response = await openai.createChatCompletion({
+          model: 'gpt-3.5-turbo',
+          messages: body.memory,
+          temperature: 0.75,
+          top_p: 1,
+        });
+
+        /// extract the data
+        const data = response.data.choices[0].message.content;
+
+        /// store the data in memory
+        const updateMemory2 = await this.updateMemory(
+          'assistant',
+          data,
+          memory,
+          tokens,
+          maxTokens,
+        );
+
+        memory = updateMemory2.memory;
+        maxTokens = updateMemory2.maxTokens;
+        tokens = updateMemory2.tokens;
+
+        /// maintain the history
+        await this.updateHistory(`Me: ${text}`, history);
+        await this.updateHistory(`Patient: ${data}`, history);
+
+        return { memory, tokens, maxTokens, history, text: data }; // Return the updated body object
+      } catch (err) {
+        console.log('Error while generating response... ', err);
+        throw err?.response?.data;
+      }
+    } else {
+      return { error: 'Sorry I cannot understand you... Please speak again' };
+    }
+  }
+```
 
 
 # Client
@@ -105,7 +202,6 @@ $ npm  install
 $ npm  start
 
 ```
-
 
 
 
