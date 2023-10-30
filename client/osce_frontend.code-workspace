@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "osce_backend",
+			"path": "../osce_backend"
+		}
+	],
+	"settings": {}
+}

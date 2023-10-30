@@ -1,0 +1,143 @@
+$dark-theme-bg-color: #0e1117;
+$light-theme-text-color: #31333f;
+$dark-theme-text-color: #fafafa;
+$secondary-bg-color: #262730;
+
+.selectOption {
+  background-color: $secondary-bg-color;
+  color: $dark-theme-text-color;
+  width: 50%;
+  height: 40px;
+  border-radius: 5px;
+  border: transparent;
+  margin-top: 20px;
+  padding: 0 10px;
+}
+
+.commonPara {
+  margin-top: 20px;
+}
+
+.btn {
+  width: 80px;
+  height: 33px;
+  background-color: $dark-theme-bg-color;
+  // color: white;
+  cursor: pointer;
+  border-radius: 15px;
+  // border: 1px solid white;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.btn:hover{
+  opacity: 0.8;
+}
+
+.endbtn {
+  width: 150px;
+  height: 33px;
+  background-color: $dark-theme-bg-color;
+  // color: white;
+  cursor: pointer;
+  border-radius: 15px;
+  // border: 1px solid white;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.endbtn:hover{
+  opacity: 0.8;
+}
+
+.btnlight {
+  color: $light-theme-text-color;
+  border: 1px solid $light-theme-text-color;
+  background-color: #fff;
+}
+
+.btndark {
+  color: $dark-theme-text-color;
+  border: 1px solid $dark-theme-text-color;
+}
+
+.ant-select {
+  min-width: 250px;
+  margin-top: 20px;
+  position: relative;
+  // background: #000;
+  @media screen and (max-width: 575px) {
+    min-width: 100%;
+  }
+  .ant-select-selector {
+    border-color: #fff !important;
+    background-color: $secondary-bg-color !important;
+    .ant-select-selection-item {
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+    @media screen and (max-width: 575px) {
+      height: 40px !important;
+    }
+  }
+
+  .ant-select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    svg {
+      color: #fff;
+      transition: 0.2s all ease-in-out;
+    }
+  }
+  &.ant-select-focused,
+  &:hover {
+    .ant-select-selector {
+      border-color: #fff !important;
+    }
+  }
+  &.ant-select-open {
+    .ant-select-arrow {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+// light theme for select
+.light {
+  .ant-select {
+    .ant-select-selector {
+      background-color: #fff !important;
+      border-color: $light-theme-text-color !important;
+      .ant-select-selection-item {
+        color: $light-theme-text-color;
+      }
+    }
+    .ant-select-arrow {
+      svg {
+        color: $light-theme-text-color;
+      }
+    }
+  }
+}
+
+.btndisabled {
+  // opacity: 0;
+  display: none;
+}
+
+.feedbackPara {
+  line-height: 22px;
+}
+
+.hrline {
+  opacity: 0.5;
+}
+
+.feedbackformat {
+  white-space: pre-line;
+  margin-bottom: 20px;
+}
