@@ -21,8 +21,6 @@ export const getImageFromDrive = async (cases: string) => {
       q: folderQuery,
     });
     const folderId = folderResponse.data.files[0]?.id;
-
-
     var ImageArray = [];
     if(folderId)
     {
@@ -50,7 +48,6 @@ export const getImageFromDrive = async (cases: string) => {
                   type: 'anyone',
                 },
               });
-    
                 const imageLink = await drive.files.get({
                 fileId: get.data.files[0].id,
                 // alt: 'media',
@@ -58,9 +55,7 @@ export const getImageFromDrive = async (cases: string) => {
                 });
                 ImageArray.push(imageLink.data.webViewLink); 
           }
-          
         }
-
         return ImageArray;
     }
     throw new InternalServerErrorException('No folder found / Error fetching files '); 
